@@ -10,6 +10,15 @@ namespace _2Y_OOP_2324_ADeckOfCards
     {
         static void Main(string[] args)
         {
+            Startup();
+
+            Console.ReadKey();
+        }
+
+        static void Startup()
+        {
+            Console.WriteLine("Welcome to the 21 Card Game! (Not Explicitly Blackjack), ");
+
             DeckOfCards doc = new DeckOfCards(true);
             Card draw = doc.drawACard();
             Console.WriteLine("Drawing a card");
