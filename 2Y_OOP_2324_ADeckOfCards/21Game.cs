@@ -10,10 +10,11 @@ namespace _2Y_OOP_2324_ADeckOfCards
     {
         private int[] handValues = new int[2]; // Index 0 is dealer's value, 1 for the player
         private bool playerTurn = true;
-        
+        private bool playerWin = true;
+        private bool gameState = true;
+
         public _21Game()
         {
-            Console.Write("Welcome to the 21 Card Game! ");
             GameStart();
 
             Console.ReadKey();
@@ -24,6 +25,7 @@ namespace _2Y_OOP_2324_ADeckOfCards
             DeckOfCards doc = new DeckOfCards(true);
             List<Card> playerHand = new List<Card>();
             List<Card> dealerHand = new List<Card>();
+            List<int> totalScore = new List<int>();
             int choice = 0;
 
             playerHand = doc.drawACard(2);
@@ -31,11 +33,24 @@ namespace _2Y_OOP_2324_ADeckOfCards
 
             while (true)
             {
-                ShowHand(dealerHand);
-                playerTurn = !playerTurn;
-                ShowHand(playerHand);
-                playerTurn = !playerTurn;
+                if (playerTurn == true)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Here are the hands: ");
+                    ShowHand(dealerHand);
+                    totalScore = ShowHand(playerHand);
+
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Here are the hands: ");
+                    totalScore = ShowHand(dealerHand);
+                    ShowHand(playerHand);
+                }
                 Console.WriteLine("\n\n");
+
+                ScoreCheck(totalScore);
 
                 if (playerTurn) // Player's Move
                 {
@@ -44,34 +59,30 @@ namespace _2Y_OOP_2324_ADeckOfCards
 
                     if (choice == 1)
                     {
-                        Console.WriteLine("Drawing a card.");
+                        Console.WriteLine("\nDrawing a card.");
                         Card draw = doc.drawACard();
                         playerHand.Add(draw);
-
-                        Console.ReadKey();
                     }
                     else if (choice == 2)
-                    {
-                        Console.WriteLine("Standing...");
+                        Console.WriteLine("\nStanding...");
 
-                        Console.ReadKey();
-                    }
+                    Console.ReadKey();
                 }
                 else // Dealer's Move
                 {
                     //
+
+                    Console.ReadKey();
                 }
 
                 Console.Clear();
             }
         }
 
-        public void ShowHand(List<Card> eitherHand)
+        public List<int> ShowHand(List<Card> eitherHand)
         {
             List<Card> hand = eitherHand;
             List<int> totalScore = new List<int>();
-
-            Console.WriteLine("Here are the hands: ");
 
             if (playerTurn == false)
             {
@@ -96,6 +107,8 @@ namespace _2Y_OOP_2324_ADeckOfCards
                 Console.WriteLine($"\nHand Value: {ScoreTally(totalScore)}");
             }
 
+            playerTurn = !playerTurn;
+            return totalScore;
         }
 
         public int PlayerChoice()
@@ -115,14 +128,12 @@ namespace _2Y_OOP_2324_ADeckOfCards
                     else
                     {
                         Console.WriteLine("\nPlease pick a number between 1 or 2");
-                        //Console.ReadKey();
                         return iInput;
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("\nThis program only currently accepts either 1 or 2 as inputs. Please try again!");
-                    //Console.ReadKey();
                     return iInput;
                 }
             }
@@ -136,6 +147,40 @@ namespace _2Y_OOP_2324_ADeckOfCards
                 finalScore += score;
 
             return finalScore;
+        }
+
+        public void ScoreCheck(List<int> totalScore)
+        {
+            int finalScore = ScoreTally(totalScore);
+
+            if (finalScore == 21)
+            {
+                if (playerTurn == true)
+                {
+                    Console.WriteLine("You won!");
+                    playerWin = true;
+                }
+                else
+                {
+                    Console.WriteLine("The house wins...");
+                    playerWin = false;
+                }
+                gameState = false;
+            }
+            else if (finalScore > 21)
+            {
+                if (playerTurn == true)
+                {
+                    Console.WriteLine("The house wins...");
+                    playerWin = false;
+                }
+                else
+                {
+                    Console.WriteLine("You won!");
+                    playerWin = true;
+                }
+                gameState = false;
+            }
         }
     }
 }
