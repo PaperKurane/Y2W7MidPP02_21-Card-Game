@@ -8,5 +8,6 @@ namespace _2Y_OOP_2324_ADeckOfCards
 {
     internal class _21Game
     {
+        // Hello from pc
     }
 }
