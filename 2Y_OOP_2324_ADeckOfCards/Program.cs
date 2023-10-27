@@ -17,8 +17,6 @@ namespace _2Y_OOP_2324_ADeckOfCards
 
         static void Startup()
         {
-            Console.WriteLine("Welcome to the 21 Card Game! Here are the hands: ");
-
             _21Game game = new _21Game();
         }
     }

@@ -13,6 +13,7 @@ namespace _2Y_OOP_2324_ADeckOfCards
         
         public _21Game()
         {
+            Console.Write("Welcome to the 21 Card Game! ");
             GameStart();
 
             Console.ReadKey();
@@ -25,11 +26,6 @@ namespace _2Y_OOP_2324_ADeckOfCards
             List<Card> dealerHand = new List<Card>();
             int choice = 0;
 
-            //Card draw = doc.drawACard();
-            //Console.WriteLine("Drawing a card");
-            //Console.WriteLine($"The Card is the {draw.GetCardFace()} of {draw.GetCardSuit()} with a value of {draw.GetCardValue()}");
-            //doc.DisplayDeck();
-
             playerHand = doc.drawACard(2);
             dealerHand = doc.drawACard(2);
 
@@ -41,27 +37,32 @@ namespace _2Y_OOP_2324_ADeckOfCards
                 playerTurn = !playerTurn;
                 Console.WriteLine("\n\n");
 
-                if (playerTurn)
+                if (playerTurn) // Player's Move
                 {
                     Console.Write("Will you Hit[1] or Stand[2]? ");
                     choice = PlayerChoice();
 
                     if (choice == 1)
                     {
+                        Console.WriteLine("Drawing a card.");
+                        Card draw = doc.drawACard();
+                        playerHand.Add(draw);
 
+                        Console.ReadKey();
                     }
                     else if (choice == 2)
                     {
+                        Console.WriteLine("Standing...");
 
+                        Console.ReadKey();
                     }
                 }
-                else
+                else // Dealer's Move
                 {
                     //
                 }
 
                 Console.Clear();
-                Console.ReadKey();
             }
         }
 
@@ -69,6 +70,8 @@ namespace _2Y_OOP_2324_ADeckOfCards
         {
             List<Card> hand = eitherHand;
             List<int> totalScore = new List<int>();
+
+            Console.WriteLine("Here are the hands: ");
 
             if (playerTurn == false)
             {
@@ -79,7 +82,7 @@ namespace _2Y_OOP_2324_ADeckOfCards
                     Console.WriteLine($"{c.GetCardValue()} - The {c.GetCardFace()} of {c.GetCardSuit()}");
                     totalScore.Add(c.GetCardValue());
                 }
-                Console.WriteLine($"\nHand Value: {handValues[1]}");
+                Console.WriteLine($"\nHand Value: {ScoreTally(totalScore)}");
             }
             else
             {
@@ -90,10 +93,9 @@ namespace _2Y_OOP_2324_ADeckOfCards
                     Console.WriteLine($"{c.GetCardValue()} - The {c.GetCardFace()} of {c.GetCardSuit()}");
                     totalScore.Add(c.GetCardValue());
                 }
-                Console.WriteLine($"\nHand Value: {handValues[0]}");
+                Console.WriteLine($"\nHand Value: {ScoreTally(totalScore)}");
             }
 
-            ScoreTally(totalScore);
         }
 
         public int PlayerChoice()
@@ -112,14 +114,16 @@ namespace _2Y_OOP_2324_ADeckOfCards
                         return iInput;
                     else
                     {
-                        Console.WriteLine("Please pick a number between 1 or 2");
-                        Console.ReadKey();
+                        Console.WriteLine("\nPlease pick a number between 1 or 2");
+                        //Console.ReadKey();
+                        return iInput;
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("This program only currently accepts either 1 or 2 as inputs. Please try again!");
-                    Console.ReadKey();
+                    Console.WriteLine("\nThis program only currently accepts either 1 or 2 as inputs. Please try again!");
+                    //Console.ReadKey();
+                    return iInput;
                 }
             }
         }
