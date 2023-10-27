@@ -22,7 +22,6 @@ namespace _2Y_OOP_2324_ADeckOfCards
             List<Card> playerHand = new List<Card>();
             List<Card> dealerHand = new List<Card>();
             List<int> totalScore = new List<int>();
-            int choice = 0;
 
             playerHand = doc.drawACard(2);
             dealerHand = doc.drawACard(2);
@@ -48,6 +47,8 @@ namespace _2Y_OOP_2324_ADeckOfCards
 
                 if (playerTurn) // Player's Move
                 {
+                    int choice = 0;
+
                     Console.Write("\n\nWill you Hit[1] or Stand[2]? ");
                     choice = PlayerChoice();
 
@@ -60,13 +61,20 @@ namespace _2Y_OOP_2324_ADeckOfCards
                     else if (choice == 2)
                         Console.WriteLine("\nStanding...");
 
+                    playerTurn = !playerTurn;
                     Console.ReadKey();
                 }
                 else // Dealer's Move
                 {
-                    //
+                    int choice = 0;
 
-                    Console.ReadKey();
+                    choice = DealerMove(dealerHand);
+
+                    if (choice == 1)
+                    {
+                        Card draw = doc.drawACard();
+                        dealerHand.Add(draw);
+                    }
                 }
             }
         }
@@ -166,6 +174,17 @@ namespace _2Y_OOP_2324_ADeckOfCards
             }
 
             return gameState;
+        }
+
+        public int DealerMove(List<Card> dealerHand)
+        {
+            List<int> totalScore = ShowHand(dealerHand);
+            int finalScore = ScoreTally(totalScore);
+
+            if (finalScore <= 17)
+                return 1;
+            else
+                return 2;
         }
     }
 }
