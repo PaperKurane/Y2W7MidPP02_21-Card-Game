@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -142,9 +143,20 @@ namespace _2Y_OOP_2324_ADeckOfCards
         public int ScoreTally(List<int> totalScore)
         {
             int finalScore = 0;
+            int aceProxy = 11;
 
             foreach(int score in totalScore)
-                finalScore += score;
+            {
+                if (score == 1 && finalScore == 10)
+                    finalScore += aceProxy;
+                else
+                    finalScore += score;
+
+                if (finalScore > 21 && score == 1)
+                    ScoreTally(totalScore);
+                else if (finalScore < 22 && score == 1)
+                    Console.WriteLine("Ace equated to 11!");
+            }
 
             return finalScore;
         }
