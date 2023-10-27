@@ -8,16 +8,12 @@ namespace _2Y_OOP_2324_ADeckOfCards
 {
     internal class _21Game
     {
-        private int[] handValues = new int[2]; // Index 0 is dealer's value, 1 for the player
         private bool playerTurn = true;
-        private bool playerWin = true;
         private bool gameState = true;
 
         public _21Game()
         {
             GameStart();
-
-            Console.ReadKey();
         }
 
         public void GameStart()
@@ -33,28 +29,26 @@ namespace _2Y_OOP_2324_ADeckOfCards
 
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Here are the hands: ");
+
                 if (playerTurn == true)
                 {
-                    Console.Clear();
-                    Console.WriteLine("Here are the hands: ");
                     ShowHand(dealerHand);
                     totalScore = ShowHand(playerHand);
-
                 }
                 else
                 {
-                    Console.Clear();
-                    Console.WriteLine("Here are the hands: ");
                     totalScore = ShowHand(dealerHand);
                     ShowHand(playerHand);
                 }
-                Console.WriteLine("\n\n");
 
-                ScoreCheck(totalScore);
+                if (ScoreCheck(totalScore) == false) // Early break in case someone wins
+                    break;
 
                 if (playerTurn) // Player's Move
                 {
-                    Console.Write("Will you Hit[1] or Stand[2]? ");
+                    Console.Write("\n\nWill you Hit[1] or Stand[2]? ");
                     choice = PlayerChoice();
 
                     if (choice == 1)
@@ -74,8 +68,6 @@ namespace _2Y_OOP_2324_ADeckOfCards
 
                     Console.ReadKey();
                 }
-
-                Console.Clear();
             }
         }
 
@@ -149,38 +141,31 @@ namespace _2Y_OOP_2324_ADeckOfCards
             return finalScore;
         }
 
-        public void ScoreCheck(List<int> totalScore)
+        public bool ScoreCheck(List<int> totalScore)
         {
             int finalScore = ScoreTally(totalScore);
+            Console.WriteLine("\n");
 
             if (finalScore == 21)
             {
                 if (playerTurn == true)
-                {
                     Console.WriteLine("You won!");
-                    playerWin = true;
-                }
                 else
-                {
                     Console.WriteLine("The house wins...");
-                    playerWin = false;
-                }
+
                 gameState = false;
             }
             else if (finalScore > 21)
             {
                 if (playerTurn == true)
-                {
                     Console.WriteLine("The house wins...");
-                    playerWin = false;
-                }
                 else
-                {
                     Console.WriteLine("You won!");
-                    playerWin = true;
-                }
+
                 gameState = false;
             }
+
+            return gameState;
         }
     }
 }
