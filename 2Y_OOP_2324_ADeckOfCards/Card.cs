@@ -30,13 +30,13 @@ namespace _2Y_OOP_2324_ADeckOfCards
             switch(suit)
             {
                 case 'D':
-                    Suit = "Diamond";
+                    Suit = "Diamonds";
                     break;
                 case 'H':
-                    Suit = "Heart";
+                    Suit = "Hearts";
                     break;
                 case 'S':
-                    Suit = "Spade";
+                    Suit = "Spades";
                     break;
                 case 'C':
                     Suit = "Clubs";

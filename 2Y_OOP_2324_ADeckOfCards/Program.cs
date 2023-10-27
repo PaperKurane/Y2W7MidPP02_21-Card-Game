@@ -17,22 +17,11 @@ namespace _2Y_OOP_2324_ADeckOfCards
 
         static void Startup()
         {
-            Console.WriteLine("Welcome to the 21 Card Game! (Not Explicitly Blackjack), ");
+            Console.WriteLine("Welcome to the 21 Card Game! Here are the hands: ");
 
-            DeckOfCards doc = new DeckOfCards(true);
-            Card draw = doc.drawACard();
-            Console.WriteLine("Drawing a card");
-            Console.WriteLine($"The Card is the {draw.GetCardFace()} of {draw.GetCardSuit()} with a value of {draw.GetCardValue()}");
-            //doc.DisplayDeck();
+            _21Game game = new _21Game();
 
-            Console.WriteLine("\n\nDrawing a couple of cards");
-            List<Card> hand = new List<Card>();
-            hand = doc.drawACard(5);
-            foreach (Card c in hand)
-            {
-                Console.WriteLine($"The Card is the {c.GetCardFace()} of {c.GetCardSuit()} with a value of {c.GetCardValue()}");
-            }
-            Console.ReadKey();
+
         }
     }
 }
