@@ -10,14 +10,9 @@ namespace _2Y_OOP_2324_ADeckOfCards
     {
         static void Main(string[] args)
         {
-            Startup();
+            _21Game game = new _21Game();
 
             Console.ReadKey();
-        }
-
-        static void Startup()
-        {
-            _21Game game = new _21Game();
         }
     }
 }
